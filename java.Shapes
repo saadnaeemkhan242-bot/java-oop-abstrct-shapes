@@ -1,0 +1,82 @@
+package Abstract_Class;
+
+//Abstract class - cannot be instantiated directly
+abstract class Shape {
+    
+ String color;
+ 
+ //Constructor - sets color for any shape created
+    Shape(String color){
+        this.color = color;
+    }
+    
+    //Abstract method - every subclass MUST provides its own area formula 
+    abstract double area();
+    
+    //Concreate method - same for all shapes, uses their own area()
+    //getSimpleName() ato-detects which subclass is calling
+    public void displayInfo(){
+        System.out.println("Color of " +getClass().getSimpleName()+ " is : " +color);
+        System.out.println("Area of " +getClass().getSimpleName()+ " is : " +area());
+        System.out.println("-------------");
+    }
+}
+
+//child class - Rectangle
+public class Rectangle extends Shape{
+    
+    double length, width;
+    
+    //super() passes color up to Shapes's constructor
+    Rectangle(String color, double length, double width){
+       super(color);
+       this.length = length;
+       this.width = width;
+    } 
+    
+    //Implementing the abstract method with Rectangle's formula
+    @Override
+    public double area(){
+        return length * width;
+    }   
+}
+
+//child class - Circle
+public class Circle extends Shape{
+    
+   double radius;
+ 
+   //again, passing color to Shape  
+   Circle(String color, double radius ){
+       super(color);
+       this.radius = radius;
+}
+   
+   //Implementing the abstract method with Circle's formula
+   @Override
+   public double area(){
+       return Math.PI*radius*radius;
+   }  
+}
+
+//Main class
+public class Main {
+
+    
+    public static void main(String[] args) {
+       
+      //Shape array - can hold any subclass object  
+      Shape[] shapes = new Shape[2];
+      
+      shapes[0] = new Rectangle("Blue", 4.5, 5.4);
+      shapes[1] = new Circle("Green", 6.7);
+      
+      //Loop() through each shape and call displayInfo()
+      //Java automatically runs the corect area() for each object
+      int a;
+      for(a=0 ; a<shapes.length ; a++){
+          shapes[a].displayInfo();
+      }
+  
+    }  
+}
